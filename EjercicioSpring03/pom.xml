@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>spring</groupId>
-    <artifactId>EjercicioSpring02</artifactId>
+    <artifactId>EjercicioSpring03</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>EjercicioSpring02</name>
+    <name>EjercicioSpring03</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -25,16 +25,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>3.0.6.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>1.6.12</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>1.6.12</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
