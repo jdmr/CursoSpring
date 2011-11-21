@@ -8,12 +8,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author jdmr
  */
 public class AlumnoMain {
-
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("escuela.xml");
 
-        AlumnoDao dao = (AlumnoDao) context.getBean("alumnoDaoJdbc");
-        dao.inicializa();
+        AlumnoDao dao = (AlumnoDao) context.getBean("alumnoDaoHibernate");
 
         Alumno alumno = new Alumno();
         alumno.setNombre("David");
