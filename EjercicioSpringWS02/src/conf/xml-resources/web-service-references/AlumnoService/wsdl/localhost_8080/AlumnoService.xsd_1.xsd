@@ -1,5 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2.6b10  svn-revision#12759. --><xs:schema xmlns:tns="http://escuela/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://escuela/">
 
+<xs:element name="actualizaAlumno" type="tns:actualizaAlumno"/>
+
+<xs:element name="actualizaAlumnoResponse" type="tns:actualizaAlumnoResponse"/>
+
+<xs:element name="creaAlumno" type="tns:creaAlumno"/>
+
+<xs:element name="creaAlumnoResponse" type="tns:creaAlumnoResponse"/>
+
+<xs:element name="inicializa" type="tns:inicializa"/>
+
+<xs:element name="inicializaResponse" type="tns:inicializaResponse"/>
+
 <xs:element name="lista" type="tns:lista"/>
 
 <xs:element name="listaResponse" type="tns:listaResponse"/>
@@ -8,15 +20,9 @@
 
 <xs:element name="obtieneAlumnoResponse" type="tns:obtieneAlumnoResponse"/>
 
-<xs:complexType name="obtieneAlumno">
+<xs:complexType name="actualizaAlumno">
 <xs:sequence>
-<xs:element name="arg0" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="obtieneAlumnoResponse">
-<xs:sequence>
-<xs:element name="return" type="tns:alumno" minOccurs="0"/>
+<xs:element name="arg0" type="tns:alumno" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -29,6 +35,44 @@
 <xs:element name="nombreImagen" type="xs:string" minOccurs="0"/>
 <xs:element name="tamanoImagen" type="xs:long" minOccurs="0"/>
 <xs:element name="tipoImagen" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="actualizaAlumnoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:alumno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="inicializa">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="inicializaResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="creaAlumno">
+<xs:sequence>
+<xs:element name="arg0" type="tns:alumno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="creaAlumnoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:alumno" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtieneAlumno">
+<xs:sequence>
+<xs:element name="arg0" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="obtieneAlumnoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:alumno" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
