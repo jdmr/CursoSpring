@@ -25,6 +25,7 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Apellido</th>
+                        <th>Imagen</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,6 +33,7 @@
                         <tr>
                             <td>${alumno.nombre}</td>
                             <td>${alumno.apellido}</td>
+                            <td><img src="<c:url value='/imagen/${alumno.id}'/>" alt="perfil" height="50" /></td>
                         </tr>
                     </c:forEach>
                 </tbody>

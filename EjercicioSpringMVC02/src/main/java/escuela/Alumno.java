@@ -18,6 +18,12 @@ public class Alumno {
     private String nombre;
     @Size(min=2,max=36,message="El apellido debe de contener al menos 2 letras y un maximo de 36")
     private String apellido;
+    private String nombreImagen;
+    private String tipoImagen;
+    private Long tamanoImagen;
+    @Lob
+    @Column(length=5000000)
+    private byte[] archivo;
 
     public Alumno() {
     }
@@ -63,4 +69,66 @@ public class Alumno {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
+
+    /**
+     * @return the nombreImagen
+     */
+    public String getNombreImagen() {
+        return nombreImagen;
+    }
+
+    /**
+     * @param nombreImagen the nombreImagen to set
+     */
+    public void setNombreImagen(String nombreImagen) {
+        this.nombreImagen = nombreImagen;
+    }
+
+    /**
+     * @return the tipoImagen
+     */
+    public String getTipoImagen() {
+        return tipoImagen;
+    }
+
+    /**
+     * @param tipoImagen the tipoImagen to set
+     */
+    public void setTipoImagen(String tipoImagen) {
+        this.tipoImagen = tipoImagen;
+    }
+
+    /**
+     * @return the tamanoImagen
+     */
+    public Long getTamanoImagen() {
+        return tamanoImagen;
+    }
+
+    /**
+     * @param tamanoImagen the tamanoImagen to set
+     */
+    public void setTamanoImagen(Long tamanoImagen) {
+        this.tamanoImagen = tamanoImagen;
+    }
+
+    /**
+     * @return the archivo
+     */
+    public byte[] getArchivo() {
+        return archivo;
+    }
+
+    /**
+     * @param archivo the archivo to set
+     */
+    public void setArchivo(byte[] archivo) {
+        this.archivo = archivo;
+    }
+
+    @Override
+    public String toString() {
+        return "Alumno{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", nombreImagen=" + nombreImagen + ", tipoImagen=" + tipoImagen + ", tamanoImagen=" + tamanoImagen + '}';
+    }
+
 }

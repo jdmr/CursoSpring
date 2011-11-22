@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c"    uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="s"    uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
@@ -15,8 +16,8 @@
     </head>
     <body>
         <h1>Nuevo Alumno</h1>
-        <c:url var="creaAlumno" value="/alumno/crea" />
-        <form:form name="alumnoForm" modelAttribute="alumno" method="post" action="${creaAlumno}" >
+        <s:url var="creaAlumno" value="/alumno/crea" />
+        <form:form name="alumnoForm" modelAttribute="alumno" method="post" action="${creaAlumno}" enctype="multipart/form-data" >
             <table>
                 <tbody>
                     <tr>
@@ -31,6 +32,12 @@
                         <td>
                             <form:input path="apellido" />
                             <form:errors path="apellido" cssStyle="color:red;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Imagen:</td>
+                        <td>
+                            <input type="file" name="imagen" />
                         </td>
                     </tr>
                     <tr>
