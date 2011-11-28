@@ -1,8 +1,7 @@
 package escuela;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jdmr
  */
-@WebServlet(name = "AlumnoServlet", urlPatterns = {"/alumnos","/alumno/lista"})
-public class AlumnoServlet extends HttpServlet {
+@WebServlet(name = "AlumnoNuevoServlet", urlPatterns = {"/alumno/nuevo"})
+public class AlumnoNuevoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -29,30 +28,10 @@ public class AlumnoServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        List<Alumno> alumnos = (List<Alumno>)request.getSession().getAttribute("alumnos");
-        if (alumnos == null) {
-            alumnos = new ArrayList<Alumno>();
-            Alumno alumno = new Alumno();
-            alumno.setNombre("David");
-            alumno.setApellido("Mendoza");
-            alumnos.add(alumno);
-            
-            alumno = new Alumno();
-            alumno.setNombre("Dulce");
-            alumno.setApellido("Alvarado");
-            alumnos.add(alumno);
-            
-            request.getSession().setAttribute("alumnos", alumnos);
-        }
-        String mensaje = (String)request.getSession().getAttribute("mensaje");
-        if (mensaje != null) {
-            request.getSession().removeAttribute("mensaje");
-            request.setAttribute("mensaje", mensaje);
-        }
-        
+        Alumno alumno = new Alumno();
+        request.setAttribute("alumno", alumno);
         RequestDispatcher requestDispatcher = 
-                getServletContext().getRequestDispatcher("/WEB-INF/jsp/alumnos.jsp");
+                getServletContext().getRequestDispatcher("/WEB-INF/jsp/nuevo.jsp");
         requestDispatcher.forward(request, response);
     }
 

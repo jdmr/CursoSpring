@@ -10,10 +10,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Alumnos</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Lista de Alumnos</h1>
+        <p><a href="<c:url value='/alumno/nuevo' />">Nuevo</a></p>
+        <c:if test="${mensaje != null}">
+            <p style="color:green;">${mensaje}</p>
+        </c:if>
         <table>
             <thead>
                 <tr>
