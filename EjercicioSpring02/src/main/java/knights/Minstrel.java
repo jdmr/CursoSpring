@@ -7,6 +7,6 @@ public class Minstrel {
     
     public void singAfterQuest() {
         System.out.println("Tee he he; El caballero valiente "
-                + "ha salido en una mision!!!");
+                + "ha iniciado en una mision!!!");
     }
 }
