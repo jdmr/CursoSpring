@@ -2,11 +2,13 @@ package escuela;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author jdmr
  */
+@Component("isar")
 public class Escuela {
     private List<Alumno> alumnos;
     
