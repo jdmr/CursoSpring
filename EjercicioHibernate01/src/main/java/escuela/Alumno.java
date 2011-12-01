@@ -1,5 +1,6 @@
 package escuela;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,12 +12,13 @@ import javax.persistence.Table;
  * @author jdmr
  */
 @Entity
-@Table(name = "ALUMNOS")
+@Table(name="alumnos")
 public class Alumno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(length = 32, unique = true, nullable = false)
     private String nombre;
     private String apellido;
 
