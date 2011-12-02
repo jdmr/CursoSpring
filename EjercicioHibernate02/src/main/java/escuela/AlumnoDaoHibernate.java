@@ -43,6 +43,7 @@ public class AlumnoDaoHibernate implements AlumnoDao {
     }
 
     public void eliminaSalon(Salon salon) {
+        currentSession().refresh(salon);
         currentSession().delete(salon);
     }
 

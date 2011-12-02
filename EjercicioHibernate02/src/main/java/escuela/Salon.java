@@ -3,6 +3,8 @@ package escuela;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -16,7 +18,8 @@ public class Salon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    @OneToMany(mappedBy = "salon", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "salon")
+    @Cascade({CascadeType.ALL,CascadeType.DELETE_ORPHAN})
     private List<Alumno> alumnos = new ArrayList<Alumno>();
 
     public Salon() {
