@@ -13,28 +13,27 @@ import org.springframework.transaction.annotation.Transactional;
  * @author jdmr
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:escuela.xml"})
+@ContextConfiguration(locations = {"classpath:escuela.xml"})
 @Transactional
-public class AlumnoDaoJdbcTest {
+public class AlumnoDaoJpaTest {
     
     @Autowired
-    private AlumnoDaoJdbc instance;
+    private AlumnoDao instance;
     
-    public AlumnoDaoJdbcTest() {
+    public AlumnoDaoJpaTest() {
     }
 
     /**
-     * Test of creaAlumno method, of class AlumnoDaoJdbc.
+     * Test of creaAlumno method, of class AlumnoDaoJpa.
      */
     @Test
     public void testCreaAlumno() {
         System.out.println("creaAlumno");
         Alumno alumno = new Alumno();
-        alumno.setNombre("Hector");
-        alumno.setApellido("Mendoza");
+        alumno.setNombre("Dulce");
+        alumno.setApellido("Alvarado");
         Alumno result = instance.creaAlumno(alumno);
-        
-        assertNotNull(result.getId());
+        assertNotNull(alumno.getId());
     }
 
 }
