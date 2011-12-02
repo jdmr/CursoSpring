@@ -41,4 +41,10 @@ public class AlumnoDaoHibernate implements AlumnoDao {
     public Alumno obtieneAlumno(Integer key) {
         return (Alumno) currentSession().get(Alumno.class, key);
     }
+
+    public void eliminaAlumno(Alumno alumno) {
+        currentSession().delete(alumno);
+    }
+    
+    
 }

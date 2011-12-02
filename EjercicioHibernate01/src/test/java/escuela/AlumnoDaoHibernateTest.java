@@ -38,4 +38,19 @@ public class AlumnoDaoHibernateTest {
         Alumno result = instance.creaAlumno(alumno);
         assertNotNull(result.getId());
     }
+    
+    @Test
+    public void testEliminaAlumno() {
+        Alumno alumno = new Alumno();
+        alumno.setNombre("Dulce");
+        alumno.setApellido("Alvarado");
+        Alumno result = instance.creaAlumno(alumno);
+        
+        Integer id = alumno.getId();
+        
+        instance.eliminaAlumno(alumno);
+        
+        Alumno prueba = instance.obtieneAlumno(id);
+        assertNull(prueba);
+    }
 }

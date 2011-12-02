@@ -14,4 +14,6 @@ public interface AlumnoDao {
 
     Alumno obtieneAlumno(Integer key);
     
+    void eliminaAlumno(Alumno alumno);
+    
 }
