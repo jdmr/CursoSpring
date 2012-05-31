@@ -18,7 +18,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:8080/AlumnoService?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://localhost:8080/webservices01/AlumnoService?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
