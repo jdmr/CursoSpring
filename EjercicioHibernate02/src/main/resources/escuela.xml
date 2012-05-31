@@ -20,15 +20,15 @@
 
     <context:component-scan base-package="escuela" />
     
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+    <bean class="org.springframework.orm.hibernate4.HibernateExceptionTranslator"/>
     
     <bean id="sessionFactory" 
-          class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="packagesToScan" value="escuela" />
     </bean>
     
-    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory">
             <ref local="sessionFactory"/>
         </property>
