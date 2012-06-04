@@ -12,6 +12,7 @@ public class BraveKnight implements Knight {
         this.quest = quest;
     }
     
+    @Override
     public void embarkOnQuest() throws QuestException {
         System.out.println("Iniciando mision");
         quest.embark();
