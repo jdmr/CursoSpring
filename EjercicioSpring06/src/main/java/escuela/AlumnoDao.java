@@ -54,9 +54,13 @@ public class AlumnoDao {
         return resultado;
     }
     
-    public Alumno crea(Alumno alumno) {
-        alumnos.add(alumno);
-        return alumno;
+    public Alumno crea(Alumno alumno) throws AlumnoNuloException {
+        if (alumno != null) {
+            alumnos.add(alumno);
+            return alumno;
+        } else {
+            throw new AlumnoNuloException();
+        }
     }
     
     public Alumno actualiza(Alumno nuevo) {

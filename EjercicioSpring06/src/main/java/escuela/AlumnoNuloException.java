@@ -27,64 +27,11 @@ package escuela;
  *
  * @author J. David Mendoza <jdmendoza@um.edu.mx>
  */
-public class Alumno {
-    private String matricula;
-    private String nombre;
-    private String apellido;
-
-    public Alumno() {
+public class AlumnoNuloException extends Exception {
+    public AlumnoNuloException() {
+        super();
     }
-
-    public Alumno(String matricula, String nombre, String apellido) {
-        this.matricula = matricula;
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
-
-    /**
-     * @return the matricula
-     */
-    public String getMatricula() {
-        return matricula;
-    }
-
-    /**
-     * @param matricula the matricula to set
-     */
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-
-    /**
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * @param nombre the nombre to set
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    /**
-     * @return the apellido
-     */
-    public String getApellido() {
-        return apellido;
-    }
-
-    /**
-     * @param apellido the apellido to set
-     */
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    @Override
-    public String toString() {
-        return "Alumno{" + "matricula=" + matricula + ", nombre=" + nombre + ", apellido=" + apellido + '}';
+    public AlumnoNuloException(String message) {
+        super(message);
     }
 }
