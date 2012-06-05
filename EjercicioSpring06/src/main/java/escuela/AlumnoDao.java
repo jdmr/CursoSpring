@@ -30,14 +30,16 @@ import java.util.List;
  * @author J. David Mendoza <jdmendoza@um.edu.mx>
  */
 public interface AlumnoDao {
-    
-    public List<Alumno> lista() ;
-    
-    public Alumno obtiene(String matricula) ;
-    
-    public Alumno crea(Alumno alumno) throws AlumnoNuloException ;
-    
-    public Alumno actualiza(Alumno nuevo) ;
-    
-    public String elimina(String matricula) ;
+
+    public List<Alumno> lista();
+
+    public Alumno obtiene(String matricula);
+
+    public Alumno crea(Alumno alumno) throws AlumnoNuloException;
+
+    public Alumno actualiza(Alumno nuevo);
+
+    public String elimina(String matricula);
+
+    public void inicializa();
 }

@@ -33,18 +33,23 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class AlumnoDaoImpl implements AlumnoDao {
-    
+
     private List<Alumno> alumnos;
+
     public AlumnoDaoImpl() {
+        inicializa();
+    }
+
+    public void inicializa() {
         alumnos = new ArrayList<Alumno>();
         alumnos.add(new Alumno("0001", "David", "Mendoza"));
         alumnos.add(new Alumno("0002", "Dulce", "Alvarado"));
     }
-    
+
     public List<Alumno> lista() {
         return alumnos;
     }
-    
+
     public Alumno obtiene(String matricula) {
         Alumno resultado = null;
         for (Alumno alumno : alumnos) {
@@ -54,7 +59,7 @@ public class AlumnoDaoImpl implements AlumnoDao {
         }
         return resultado;
     }
-    
+
     public Alumno crea(Alumno alumno) throws AlumnoNuloException {
         if (alumno != null) {
             alumnos.add(alumno);
@@ -63,7 +68,7 @@ public class AlumnoDaoImpl implements AlumnoDao {
             throw new AlumnoNuloException();
         }
     }
-    
+
     public Alumno actualiza(Alumno nuevo) {
         Alumno resultado = null;
         for (Alumno alumno : alumnos) {
@@ -75,7 +80,7 @@ public class AlumnoDaoImpl implements AlumnoDao {
         }
         return resultado;
     }
-    
+
     public String elimina(String matricula) {
         Alumno resultado = null;
         for (Alumno alumno : alumnos) {

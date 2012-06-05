@@ -25,6 +25,7 @@ package escuela;
 
 import java.util.List;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,11 @@ public class AlumnoDaoTest {
     private AlumnoDao instance;
 
     public AlumnoDaoTest() {
+    }
+    
+    @Before
+    public void inicializaLista() {
+        instance.inicializa();
     }
 
     /**
