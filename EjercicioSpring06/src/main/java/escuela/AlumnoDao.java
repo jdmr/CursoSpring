@@ -43,4 +43,45 @@ public class AlumnoDao {
     public List<Alumno> lista() {
         return alumnos;
     }
+    
+    public Alumno obtiene(String matricula) {
+        Alumno resultado = null;
+        for (Alumno alumno : alumnos) {
+            if (alumno.getMatricula().equals(matricula)) {
+                resultado = alumno;
+            }
+        }
+        return resultado;
+    }
+    
+    public Alumno crea(Alumno alumno) {
+        alumnos.add(alumno);
+        return alumno;
+    }
+    
+    public Alumno actualiza(Alumno nuevo) {
+        Alumno resultado = null;
+        for (Alumno alumno : alumnos) {
+            if (alumno.getMatricula().equals(nuevo.getMatricula())) {
+                alumno.setNombre(nuevo.getNombre());
+                alumno.setApellido(nuevo.getApellido());
+                resultado = alumno;
+            }
+        }
+        return resultado;
+    }
+    
+    public String elimina(String matricula) {
+        Alumno resultado = null;
+        for (Alumno alumno : alumnos) {
+            if (matricula.equals(alumno.getMatricula())) {
+                resultado = alumno;
+                break;
+            }
+        }
+        if (resultado != null) {
+            alumnos.remove(resultado);
+        }
+        return matricula;
+    }
 }
