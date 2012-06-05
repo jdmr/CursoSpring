@@ -23,21 +23,21 @@
  */
 package escuela;
 
-import java.util.List;
+import java.util.Date;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@um.edu.mx>
  */
-public interface AlumnoDao {
+@Component
+public class Auditor {
+
+    public void antesCrear() {
+        System.out.println("Se esta dando de alta al alumno a las "+ new Date());
+    }
     
-    public List<Alumno> lista() ;
-    
-    public Alumno obtiene(String matricula) ;
-    
-    public Alumno crea(Alumno alumno) throws AlumnoNuloException ;
-    
-    public Alumno actualiza(Alumno nuevo) ;
-    
-    public String elimina(String matricula) ;
+    public void despuesCrear() {
+        System.out.println("Se ha dado de alta al alumno a las "+ new Date());
+    }
 }
