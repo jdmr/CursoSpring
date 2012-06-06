@@ -25,9 +25,10 @@ package escuela;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -40,6 +41,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class AlumnoDaoImpl extends JdbcDaoSupport implements AlumnoDao {
+    
+    private static final Logger log = LoggerFactory.getLogger(AlumnoDaoImpl.class);
 
     private static final String CREA_TABLA = "CREATE TABLE ALUMNOS("
             + "MATRICULA VARCHAR(32) PRIMARY KEY,"
@@ -54,11 +57,13 @@ public class AlumnoDaoImpl extends JdbcDaoSupport implements AlumnoDao {
 
     @Autowired
     public AlumnoDaoImpl(DataSource dataSource) {
+        log.info("Nueva instancia de AlumnoDao creada.");
         setDataSource(dataSource);
         inicializa();
     }
 
     public void inicializa() {
+        log.debug("Inicializando tablas");
         getJdbcTemplate().update(ELIMINA_TABLA);
         getJdbcTemplate().update(CREA_TABLA);
         getJdbcTemplate().update("INSERT INTO ALUMNOS(MATRICULA, NOMBRE, APELLIDO) "
@@ -69,11 +74,13 @@ public class AlumnoDaoImpl extends JdbcDaoSupport implements AlumnoDao {
     }
 
     public List<Alumno> lista() {
+        log.debug("Buscando lista de alumnos");
         List<Alumno> resultados = getJdbcTemplate().query(LISTA, new AlumnoMapper());
         return resultados;
     }
 
     public Alumno obtiene(String matricula) {
+        log.debug("Obtiene el alumno {}", matricula);
         Alumno resultado = null;
 
         try {
@@ -81,12 +88,13 @@ public class AlumnoDaoImpl extends JdbcDaoSupport implements AlumnoDao {
 
             return resultado;
         } catch(EmptyResultDataAccessException e) {
-            System.out.println("No encontre al alumno con la matricula "+ matricula);
+            log.error("No encontre al alumno con la matricula "+matricula, e);
             return null;
         }
     }
 
     public Alumno crea(Alumno alumno) throws AlumnoNuloException {
+        log.debug("Creando alumno {}", alumno);
         if (alumno != null) {
             getJdbcTemplate().update(CREA, alumno.getMatricula(), alumno.getNombre(), alumno.getApellido());
             return alumno;
@@ -96,11 +104,13 @@ public class AlumnoDaoImpl extends JdbcDaoSupport implements AlumnoDao {
     }
 
     public Alumno actualiza(Alumno alumno) {
+        log.debug("Actualizando al alumno {}", alumno);
         getJdbcTemplate().update(ACTUALIZA, alumno.getNombre(), alumno.getApellido(), alumno.getMatricula());
         return alumno;
     }
 
     public String elimina(String matricula) {
+        log.debug("Eliminando al alumno {}", matricula);
         getJdbcTemplate().update(ELIMINA, matricula);
         return matricula;
     }
