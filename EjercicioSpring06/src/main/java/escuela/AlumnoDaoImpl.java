@@ -23,8 +23,14 @@
  */
 package escuela;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -32,22 +38,47 @@ import org.springframework.stereotype.Repository;
  * @author J. David Mendoza <jdmendoza@um.edu.mx>
  */
 @Repository
-public class AlumnoDaoImpl implements AlumnoDao {
+public class AlumnoDaoImpl extends JdbcDaoSupport implements AlumnoDao {
 
+    private static final String CREA_TABLA = "CREATE TABLE ALUMNOS("
+            + "MATRICULA VARCHAR(32) PRIMARY KEY,"
+            + "NOMBRE VARCHAR(32),"
+            + "APELLIDO VARCHAR(32))";
+    private static final String ELIMINA_TABLA = "DROP TABLE ALUMNOS";
+    private static final String LISTA = "SELECT * FROM ALUMNOS";
     private List<Alumno> alumnos;
 
-    public AlumnoDaoImpl() {
+    @Autowired
+    public AlumnoDaoImpl(DataSource dataSource) {
+        setDataSource(dataSource);
         inicializa();
     }
 
     public void inicializa() {
+        getJdbcTemplate().update(ELIMINA_TABLA);
+        getJdbcTemplate().update(CREA_TABLA);
+        getJdbcTemplate().update("INSERT INTO ALUMNOS(MATRICULA, NOMBRE, APELLIDO) "
+                + "VALUES('0001','David','Mendoza')");
+        getJdbcTemplate().update("INSERT INTO ALUMNOS(MATRICULA, NOMBRE, APELLIDO) "
+                + "VALUES('0002','Dulce','Alvarado')");
+        
         alumnos = new ArrayList<Alumno>();
         alumnos.add(new Alumno("0001", "David", "Mendoza"));
         alumnos.add(new Alumno("0002", "Dulce", "Alvarado"));
     }
 
     public List<Alumno> lista() {
-        return alumnos;
+        List<Alumno> resultados = getJdbcTemplate().query(LISTA, new RowMapper<Alumno>() {
+
+            public Alumno mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Alumno alumno = new Alumno();
+                alumno.setMatricula(rs.getString("MATRICULA"));
+                alumno.setNombre(rs.getString("NOMBRE"));
+                alumno.setApellido(rs.getString("APELLIDO"));
+                return alumno;
+            }
+        });
+        return resultados;
     }
 
     public Alumno obtiene(String matricula) {
