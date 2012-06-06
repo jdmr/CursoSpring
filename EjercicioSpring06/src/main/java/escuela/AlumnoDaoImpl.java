@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -46,7 +47,10 @@ public class AlumnoDaoImpl extends JdbcDaoSupport implements AlumnoDao {
             + "APELLIDO VARCHAR(32))";
     private static final String ELIMINA_TABLA = "DROP TABLE ALUMNOS";
     private static final String LISTA = "SELECT * FROM ALUMNOS";
-    private List<Alumno> alumnos;
+    private static final String OBTIENE = "SELECT * FROM ALUMNOS WHERE MATRICULA = ?";
+    private static final String CREA = "INSERT INTO ALUMNOS(MATRICULA, NOMBRE, APELLIDO) VALUES(?,?,?)";
+    private static final String ACTUALIZA = "UPDATE ALUMNOS SET NOMBRE = ?, APELLIDO = ? WHERE MATRICULA = ?";
+    private static final String ELIMINA = "DELETE FROM ALUMNOS WHERE MATRICULA = ?";
 
     @Autowired
     public AlumnoDaoImpl(DataSource dataSource) {
@@ -61,68 +65,54 @@ public class AlumnoDaoImpl extends JdbcDaoSupport implements AlumnoDao {
                 + "VALUES('0001','David','Mendoza')");
         getJdbcTemplate().update("INSERT INTO ALUMNOS(MATRICULA, NOMBRE, APELLIDO) "
                 + "VALUES('0002','Dulce','Alvarado')");
-        
-        alumnos = new ArrayList<Alumno>();
-        alumnos.add(new Alumno("0001", "David", "Mendoza"));
-        alumnos.add(new Alumno("0002", "Dulce", "Alvarado"));
+
     }
 
     public List<Alumno> lista() {
-        List<Alumno> resultados = getJdbcTemplate().query(LISTA, new RowMapper<Alumno>() {
-
-            public Alumno mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Alumno alumno = new Alumno();
-                alumno.setMatricula(rs.getString("MATRICULA"));
-                alumno.setNombre(rs.getString("NOMBRE"));
-                alumno.setApellido(rs.getString("APELLIDO"));
-                return alumno;
-            }
-        });
+        List<Alumno> resultados = getJdbcTemplate().query(LISTA, new AlumnoMapper());
         return resultados;
     }
 
     public Alumno obtiene(String matricula) {
         Alumno resultado = null;
-        for (Alumno alumno : alumnos) {
-            if (alumno.getMatricula().equals(matricula)) {
-                resultado = alumno;
-            }
+
+        try {
+            resultado = getJdbcTemplate().queryForObject(OBTIENE, new AlumnoMapper(), matricula);
+
+            return resultado;
+        } catch(EmptyResultDataAccessException e) {
+            System.out.println("No encontre al alumno con la matricula "+ matricula);
+            return null;
         }
-        return resultado;
     }
 
     public Alumno crea(Alumno alumno) throws AlumnoNuloException {
         if (alumno != null) {
-            alumnos.add(alumno);
+            getJdbcTemplate().update(CREA, alumno.getMatricula(), alumno.getNombre(), alumno.getApellido());
             return alumno;
         } else {
             throw new AlumnoNuloException();
         }
     }
 
-    public Alumno actualiza(Alumno nuevo) {
-        Alumno resultado = null;
-        for (Alumno alumno : alumnos) {
-            if (alumno.getMatricula().equals(nuevo.getMatricula())) {
-                alumno.setNombre(nuevo.getNombre());
-                alumno.setApellido(nuevo.getApellido());
-                resultado = alumno;
-            }
-        }
-        return resultado;
+    public Alumno actualiza(Alumno alumno) {
+        getJdbcTemplate().update(ACTUALIZA, alumno.getNombre(), alumno.getApellido(), alumno.getMatricula());
+        return alumno;
     }
 
     public String elimina(String matricula) {
-        Alumno resultado = null;
-        for (Alumno alumno : alumnos) {
-            if (matricula.equals(alumno.getMatricula())) {
-                resultado = alumno;
-                break;
-            }
-        }
-        if (resultado != null) {
-            alumnos.remove(resultado);
-        }
+        getJdbcTemplate().update(ELIMINA, matricula);
         return matricula;
+    }
+}
+
+class AlumnoMapper implements RowMapper<Alumno> {
+
+    public Alumno mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Alumno alumno = new Alumno();
+        alumno.setMatricula(rs.getString("MATRICULA"));
+        alumno.setNombre(rs.getString("NOMBRE"));
+        alumno.setApellido(rs.getString("APELLIDO"));
+        return alumno;
     }
 }
