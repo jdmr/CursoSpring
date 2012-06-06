@@ -39,7 +39,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author J. David Mendoza <jdmendoza@um.edu.mx>
  */
-@Repository
+@Repository("alumnoDaoJdbc")
 public class AlumnoDaoImpl extends JdbcDaoSupport implements AlumnoDao {
     
     private static final Logger log = LoggerFactory.getLogger(AlumnoDaoImpl.class);

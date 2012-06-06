@@ -23,13 +23,29 @@
  */
 package escuela;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.IndexColumn;
+
 /**
  *
  * @author J. David Mendoza <jdmendoza@um.edu.mx>
  */
-public class Alumno {
+@Entity
+@Table(name = "alumnos", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"nombre", "apellido"})})
+public class Alumno implements Serializable {
+
+    @Id
     private String matricula;
+    @IndexColumn(name = "alumno_nombre_idx")
+    @Column(length = 64, nullable = false)
     private String nombre;
+    @Column(length = 64, nullable = false)
     private String apellido;
 
     public Alumno() {
