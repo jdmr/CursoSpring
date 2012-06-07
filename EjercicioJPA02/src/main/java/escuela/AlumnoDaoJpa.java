@@ -1,7 +1,9 @@
 package escuela;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,11 @@ public class AlumnoDaoJpa implements AlumnoDao {
 
     public Alumno obtieneAlumno(Integer key) {
         return em.find(Alumno.class, key);
+    }
+    
+    public List<Alumno> lista() {
+        Query query = em.createQuery("select a from Alumno a");
+        return query.getResultList();
     }
     
 }
