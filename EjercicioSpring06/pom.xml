@@ -5,7 +5,7 @@
     <groupId>escuela</groupId>
     <artifactId>EjercicioSpring06</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>EjercicioSpring06</name>
     <url>http://maven.apache.org</url>
@@ -32,13 +32,20 @@
             <version>1.0.4</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>3.1.1.RELEASE</version>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-web-6.0</artifactId>
+            <version>2.0.0.Final</version>
+            <type>pom</type>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
+            <version>3.1.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
             <version>3.1.1.RELEASE</version>
         </dependency>
         <dependency>
@@ -52,6 +59,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>4.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.2.0.Final</version>
         </dependency>
         <dependency>
             <groupId>javassist</groupId>
@@ -89,6 +101,16 @@
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>2.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

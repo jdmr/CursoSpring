@@ -1,7 +1,6 @@
 package escuela;
 
 import java.util.List;
-import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +23,11 @@ public class AlumnoController {
     private AlumnoDao dao;
 
     @RequestMapping({"", "/lista"})
-    public String lista(Map<String, Object> model) {
+    public String lista(Model model) {
         log.debug("Mostrando lista de alumnos");
         List<Alumno> alumnos = dao.lista();
         if (alumnos.size() > 0) {
-            model.put("alumnos", dao.lista());
+            model.addAttribute("alumnos", alumnos);
         }
         return "alumno/lista";
     }
@@ -41,7 +40,7 @@ public class AlumnoController {
     }
 
     @RequestMapping(value = "/crea", method = RequestMethod.POST)
-    public String crea(@ModelAttribute Alumno alumno, Model model) {
+    public String crea(@ModelAttribute Alumno alumno) {
         dao.creaAlumno(alumno);
         return "redirect:/alumno/lista";
     }
