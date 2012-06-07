@@ -26,12 +26,13 @@
                     <p>${mensaje}</p>
                 </div>
             </c:if>
-            <table>
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Matrícula</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,6 +41,10 @@
                             <td>${alumno.matricula}</td>
                             <td>${alumno.nombre}</td>
                             <td>${alumno.apellido}</td>
+                            <td>
+                                <a href='<c:url value="/alumno/edita/${alumno.matricula}" />'>Edita</a>
+                                <a href='<c:url value="/alumno/elimina/${alumno.matricula}" />'>Elimina</a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>
