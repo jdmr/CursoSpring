@@ -24,14 +24,18 @@
 package escuela;
 
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import static org.junit.Assert.*;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -39,18 +43,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:escuela.xml"})
+@Transactional
 public class AlumnoDaoTest {
 
+    private static final Logger log = LoggerFactory.getLogger(AlumnoDaoTest.class);
     @Autowired
     @Qualifier("alumnoDaoHibernate")
     private AlumnoDao instance;
-
+    @Autowired
+    private SessionFactory sessionFactory;
+    
     public AlumnoDaoTest() {
     }
     
-    @Before
-    public void inicializaLista() {
-        instance.inicializa();
+    private Session currentSession() {
+        return sessionFactory.getCurrentSession();
     }
 
     /**
@@ -58,11 +65,24 @@ public class AlumnoDaoTest {
      */
     @Test
     public void testLista() {
-        System.out.println("lista");
+        log.debug("Probando lista de Alumnos");
+        log.debug("Preparando lista de datos");
+        for(int i = 1; i <= 20; i++) {
+            Alumno alumno;
+            if (i < 10) {
+                alumno = new Alumno("000"+i, "Nombre0"+i, "Apellido0"+i);
+            } else {
+                alumno = new Alumno("00"+i, "Nombre"+i, "Apellido"+i);
+            }
+            currentSession().save(alumno);
+        }
+        
+        log.debug("Realizando prueba");
         List<Alumno> result = instance.lista();
+        
+        log.debug("Validando");
         assertNotNull(result);
-        assertEquals(2, result.size());
-        assertEquals("0001", result.get(0).getMatricula());
+        assertTrue(20 <= result.size());
     }
 
     /**
@@ -70,7 +90,7 @@ public class AlumnoDaoTest {
      */
     @Test
     public void debieraRegresarNullParaMatriculaInvalida() {
-        System.out.println("obtiene");
+        log.debug("Debiera regresar null para matricula invalida");
         String matricula = "";
         Alumno result = instance.obtiene(matricula);
         assertNull(result);
@@ -78,9 +98,13 @@ public class AlumnoDaoTest {
 
     @Test
     public void debieraRegresarAlumnoParaMatriculaValida() {
-        System.out.println("debier regresar alumno para matricula valida");
+        log.debug("debiera regresar alumno para matricula valida");
         String matricula = "0001";
+        Alumno alumno = new Alumno(matricula, "David", "Mendoza");
+        currentSession().save(alumno);
+        
         Alumno result = instance.obtiene(matricula);
+
         assertNotNull(result);
         assertEquals("David", result.getNombre());
     }
@@ -115,13 +139,17 @@ public class AlumnoDaoTest {
     @Test
     public void testActualiza() {
         System.out.println("actualiza");
-        Alumno nuevo = instance.obtiene("0001");
-        assertFalse("Jorge David".equals(nuevo.getNombre()));
+        Alumno alumno = new Alumno("0001", "David", "Mendoza");
+        currentSession().save(alumno);
         
-        nuevo.setNombre("Jorge David");
-        Alumno result = instance.actualiza(nuevo);
+        assertFalse("Jorge David".equals(alumno.getNombre()));
+        
+        alumno.setNombre("Jorge David");
+        Alumno result = instance.actualiza(alumno);
+        
+        currentSession().refresh(alumno);
         assertNotNull(result);
-        assertEquals("Jorge David", result.getNombre());
+        assertEquals("Jorge David", alumno.getNombre());
     }
 
     /**
@@ -132,9 +160,12 @@ public class AlumnoDaoTest {
         System.out.println("elimina");
         String matricula = "0001";
         String expResult = "0001";
+        Alumno alumno = new Alumno(matricula, "David", "Mendoza");
+        currentSession().save(alumno);
+        
         String result = instance.elimina(matricula);
         assertEquals(expResult, result);
         
-        assertNull(instance.obtiene("0001"));
+        assertNull(instance.obtiene(matricula));
     }
 }

@@ -70,6 +70,7 @@ public class AlumnoDaoHibernate implements AlumnoDao {
 
     public Alumno actualiza(Alumno nuevo) {
         currentSession().update(nuevo);
+        currentSession().flush();
         return nuevo;
     }
 

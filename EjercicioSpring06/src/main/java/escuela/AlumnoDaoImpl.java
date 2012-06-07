@@ -59,7 +59,6 @@ public class AlumnoDaoImpl extends JdbcDaoSupport implements AlumnoDao {
     public AlumnoDaoImpl(DataSource dataSource) {
         log.info("Nueva instancia de AlumnoDao creada.");
         setDataSource(dataSource);
-        inicializa();
     }
 
     public void inicializa() {
