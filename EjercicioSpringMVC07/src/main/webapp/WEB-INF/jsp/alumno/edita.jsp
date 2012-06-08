@@ -12,20 +12,27 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Nuevo Alumno</title>
+        <title>Edita Alumno</title>
         <link rel="stylesheet" href="<c:url value='/css/bootstrap.min.css' />" type="text/css">
         <link rel="stylesheet" href="<c:url value='/css/bootstrap-responsive.min.css' />" type="text/css">
         <link rel="stylesheet" href="<c:url value='/css/app.css' />" type="text/css">
     </head>
     <body>
         <div class="container-fluid" >
-            <h1>Nuevo Alumno</h1>
-            <c:url var="crea" value="/alumno/crea" />
-            <form:form name="alumnoForm" modelAttribute="alumno" method="post" action="${crea}" >
+            <h1>Edita Alumno</h1>
+            <c:if test="${not empty mensaje}">
+                <div class="alert alert-block ${estiloMensaje}">
+                    <a class="close" data-dismiss="alert" href="#">×</a>
+                    <p>${mensaje}</p>
+                </div>
+            </c:if>
+            <c:url var="actualiza" value="/alumno/actualiza" />
+            <form:form name="alumnoForm" modelAttribute="alumno" method="post" action="${actualiza}" >
+                <form:hidden path="matricula" />
                 <fieldset>
                     <div class="row-fluid control-group">
                         <label for="matricula">Matrícula:</label>
-                        <form:input path="matricula" /><br/>
+                        <form:input path="matricula" disabled="true" />
                     </div>
                     <div class="row-fluid control-group">
                         <label for="nombre">Nombre:</label>

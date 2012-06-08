@@ -21,8 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package escuela;
+package escuela.dao.impl;
 
+import escuela.dao.AlumnoDao;
+import escuela.model.Alumno;
+import escuela.util.AlumnoNuloException;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -49,15 +52,18 @@ public class AlumnoDaoHibernate implements AlumnoDao {
         return sessionFactory.getCurrentSession();
     }
 
+    @Override
     public List<Alumno> lista() {
         Query query = currentSession().createQuery("select a from Alumno a");
         return query.list();
     }
 
+    @Override
     public Alumno obtiene(String matricula) {
         return (Alumno)currentSession().get(Alumno.class, matricula);
     }
 
+    @Override
     public Alumno crea(Alumno alumno) throws AlumnoNuloException {
         try {
             currentSession().save(alumno);
@@ -69,18 +75,21 @@ public class AlumnoDaoHibernate implements AlumnoDao {
         return alumno;
     }
 
+    @Override
     public Alumno actualiza(Alumno nuevo) {
         currentSession().update(nuevo);
         currentSession().flush();
         return nuevo;
     }
 
+    @Override
     public String elimina(String matricula) {
         Alumno alumno = (Alumno) currentSession().load(Alumno.class, matricula);
         currentSession().delete(alumno);
         return matricula;
     }
 
+    @Override
     public void inicializa() {
         // ya no lo vamos a ocupar con hibernate
     }

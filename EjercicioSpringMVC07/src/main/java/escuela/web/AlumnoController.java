@@ -21,8 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package escuela;
+package escuela.web;
 
+import escuela.dao.AlumnoDao;
+import escuela.model.Alumno;
+import escuela.util.AlumnoNuloException;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
