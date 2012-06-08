@@ -43,8 +43,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Alumno implements Serializable {
 
     @Id
-    @NotEmpty
-    @Size(min=4, max=4)
+    @NotEmpty(message="{matricula.NotEmpty.message}")
+    @Size(min=4, max=4, message="{matricula.Size.message}")
     private String matricula;
     @IndexColumn(name = "alumno_nombre_idx")
     @Column(length = 64, nullable = false)

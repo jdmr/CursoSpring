@@ -29,10 +29,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.IndexColumn;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -44,16 +43,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Alumno implements Serializable {
 
     @Id
-    @NotEmpty
-    @Size(min=4, max=4)
+    @NotBlank(message="La matrícula no puede estar vacía")
+    @Size(min=4, max=4, message="{matricula.size.message}")
     private String matricula;
     @IndexColumn(name = "alumno_nombre_idx")
     @Column(length = 64, nullable = false)
-    @NotEmpty
+    @NotBlank
     @Size(max=64)
     private String nombre;
     @Column(length = 64, nullable = false)
-    @NotEmpty
+    @NotBlank
     @Size(max=64)
     private String apellido;
 

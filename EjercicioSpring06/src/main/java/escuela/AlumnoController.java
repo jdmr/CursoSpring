@@ -24,12 +24,14 @@
 package escuela;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,9 +69,13 @@ public class AlumnoController {
     }
     
     @RequestMapping("/crea")
-    public String crea(@ModelAttribute Alumno alumno, 
+    public String crea(@Valid Alumno alumno, 
+        BindingResult bindingResult,
         Model modelo,
         RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "/alumno/nuevo";
+        }
         try {
             alumno = alumnoDao.crea(alumno);
             StringBuilder sb = new StringBuilder();
