@@ -39,6 +39,6 @@ public class SecureController {
     
     @RequestMapping
     public String hola() {
-        return "render:Hola desde el lado seguro de la aplicación";
+        return "secure/hola";
     }
 }

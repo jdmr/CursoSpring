@@ -9,7 +9,7 @@
     <http auto-config="true" use-expressions="true">
         <intercept-url pattern="/secure/**" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
         <form-login />
-        <logout logout-url="/salir" logout-success-url="/alumno/lista" invalidate-session="true" />
+        <logout logout-url="/salir" logout-success-url="/alumno" invalidate-session="true" />
         <remember-me />
     </http>
 
