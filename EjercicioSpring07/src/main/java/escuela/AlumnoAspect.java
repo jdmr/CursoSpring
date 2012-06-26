@@ -23,40 +23,17 @@
  */
 package escuela;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import org.springframework.stereotype.Repository;
+import java.util.Date;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@um.edu.mx>
  */
-@Repository
-public class AlumnoDao {
+@Component
+public class AlumnoAspect {
     
-    private Map<String, Alumno> alumnos = new TreeMap<>();
-    
-    public List<Alumno> lista() {
-        return new ArrayList<>(alumnos.values());
-    }
-    
-    public Alumno obtiene(String matricula) {
-        return alumnos.get(matricula);
-    }
-    
-    public Alumno crea(Alumno alumno) {
-        alumnos.put(alumno.getMatricula(), alumno);
-        return alumno;
-    }
-    
-    public Alumno actualiza(Alumno alumno) {
-        alumnos.put(alumno.getMatricula(), alumno);
-        return alumno;
-    }
-    
-    public void elimina(String matricula) {
-        alumnos.remove(matricula);
+    public void alumnoCreado() {
+        System.out.println("El alumno ha sido creado a las "+ new Date());
     }
 }
