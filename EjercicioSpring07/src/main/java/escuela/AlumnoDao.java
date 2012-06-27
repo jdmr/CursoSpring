@@ -23,40 +23,27 @@
  */
 package escuela;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author J. David Mendoza <jdmendoza@um.edu.mx>
  */
-@Repository
-public class AlumnoDao {
+public interface AlumnoDao {
+
+    public List<Alumno> lista();
+
+    public Alumno obtiene(String matricula);
     
-    private Map<String, Alumno> alumnos = new TreeMap<>();
+    public Alumno obtiene(Long id);
+
+    public Alumno crea(Alumno alumno);
+
+    public Alumno actualiza(Alumno alumno);
+
+    public void elimina(String matricula);
     
-    public List<Alumno> lista() {
-        return new ArrayList<>(alumnos.values());
-    }
+    public void elimina(Long id);
     
-    public Alumno obtiene(String matricula) {
-        return alumnos.get(matricula);
-    }
-    
-    public Alumno crea(Alumno alumno) {
-        alumnos.put(alumno.getMatricula(), alumno);
-        return alumno;
-    }
-    
-    public Alumno actualiza(Alumno alumno) {
-        alumnos.put(alumno.getMatricula(), alumno);
-        return alumno;
-    }
-    
-    public void elimina(String matricula) {
-        alumnos.remove(matricula);
-    }
+    public void inicializa();
 }

@@ -18,6 +18,7 @@ public class App {
         ApplicationContext context = new ClassPathXmlApplicationContext("escuela.xml");
         
         AlumnoDao alumnoDao = context.getBean(AlumnoDao.class);
+        alumnoDao.inicializa();
         
         NumberFormat nf = DecimalFormat.getInstance();
         NumberFormat nf2 = DecimalFormat.getInstance();
