@@ -30,6 +30,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -45,6 +47,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AlumnoDaoTest {
 
+    private static final Logger log = LoggerFactory.getLogger(AlumnoDaoTest.class);
+    
     @Autowired
     private AlumnoDao instance;
 
@@ -61,7 +65,7 @@ public class AlumnoDaoTest {
      */
     @Test
     public void debieraObtenerListaDeAlumnos() {
-        System.out.println("lista");
+        log.debug("lista");
 
         NumberFormat nf = DecimalFormat.getInstance();
         NumberFormat nf2 = DecimalFormat.getInstance();
@@ -88,7 +92,7 @@ public class AlumnoDaoTest {
      */
     @Test
     public void debieraObtenerAlumno() {
-        System.out.println("obtiene");
+        log.debug("obtiene");
         String matricula = "0001";
         Alumno alumno = new Alumno(matricula, "Alumno 01", "Apellido 01");
         alumno = instance.crea(alumno);
@@ -107,7 +111,7 @@ public class AlumnoDaoTest {
      */
     @Test
     public void testActualiza() {
-        System.out.println("actualiza");
+        log.debug("actualiza");
         String matricula = "0001";
         Alumno alumno = new Alumno(matricula, "Alumno 01", "Apellido 01");
         alumno = instance.crea(alumno);
@@ -127,7 +131,7 @@ public class AlumnoDaoTest {
      */
     @Test(expected = EmptyResultDataAccessException.class)
     public void testEliminaConMatricula() {
-        System.out.println("elimina");
+        log.debug("elimina");
         String matricula = "0001";
         Alumno alumno = new Alumno(matricula, "Alumno 01", "Apellido 01");
         instance.crea(alumno);
@@ -140,7 +144,7 @@ public class AlumnoDaoTest {
     
     @Test(expected = EmptyResultDataAccessException.class)
     public void testEliminaConID() {
-        System.out.println("elimina");
+        log.debug("elimina");
         String matricula = "0001";
         Alumno alumno = new Alumno(matricula, "Alumno 01", "Apellido 01");
         alumno = instance.crea(alumno);

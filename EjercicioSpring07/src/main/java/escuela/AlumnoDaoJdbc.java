@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -47,6 +49,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class AlumnoDaoJdbc extends JdbcDaoSupport implements AlumnoDao {
+    
+    private static final Logger log = LoggerFactory.getLogger(AlumnoDaoJdbc.class);
 
     private Map<String, Alumno> alumnos = new TreeMap<>();
     private static final String CREAR_TABLA = "CREATE TABLE ALUMNOS("
@@ -67,29 +71,34 @@ public class AlumnoDaoJdbc extends JdbcDaoSupport implements AlumnoDao {
 
     @Autowired
     public AlumnoDaoJdbc(DataSource dataSource) {
+        log.info("Se ha creado una nueva instancia de AlumnoDaoJdbc");
         setDataSource(dataSource);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Alumno> lista() {
+        log.debug("Regresando lista de alumnos");
         return getJdbcTemplate().query(OBTIENE_ALUMNOS, new AlumnoMapper());
     }
 
     @Override
     @Transactional(readOnly = true)
     public Alumno obtiene(final String matricula) {
+        log.debug("Obteniendo alumno por matricula: {}", matricula);
         return getJdbcTemplate().queryForObject(OBTIENE_ALUMNO_X_MATRICULA, new Object[]{matricula}, new AlumnoMapper());
     }
 
     @Override
     @Transactional(readOnly = true)
     public Alumno obtiene(final Long id) {
+        log.debug("Obteniendo alumno por id: {}", id);
         return getJdbcTemplate().queryForObject(OBTIENE_ALUMNO, new Object[]{id}, new AlumnoMapper());
     }
 
     @Override
     public Alumno crea(final Alumno alumno) {
+        log.debug("Creando alumno: {}", alumno);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         PreparedStatementCreator psCreator = new PreparedStatementCreator() {
             @Override
@@ -111,22 +120,26 @@ public class AlumnoDaoJdbc extends JdbcDaoSupport implements AlumnoDao {
 
     @Override
     public Alumno actualiza(Alumno alumno) {
+        log.debug("Actualizando alumno: {}", alumno);
         getJdbcTemplate().update(ACTUALIZAR_ALUMNO, alumno.getNombre(), alumno.getApellido(), alumno.getId());
         return alumno;
     }
 
     @Override
     public void elimina(String matricula) {
+        log.debug("Eliminando alumno por matricula {}", matricula);
         getJdbcTemplate().update(ELIMINA_ALUMNO_X_MATRICULA, matricula);
     }
 
     @Override
     public void elimina(Long id) {
+        log.debug("Eliminando alumno por id {}", id);
         getJdbcTemplate().update(ELIMINA_ALUMNO, id);
     }
 
     @Override
     public void inicializa() {
+        log.debug("Inicializando ALUMNOS");
         getJdbcTemplate().update(ELIMINA_TABLA);
         getJdbcTemplate().update(CREAR_TABLA);
     }
