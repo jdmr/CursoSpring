@@ -23,27 +23,17 @@
  */
 package escuela;
 
-import java.util.List;
-
 /**
  *
  * @author J. David Mendoza <jdmendoza@um.edu.mx>
  */
-public interface AlumnoDao {
-
-    public List<Alumno> lista();
-
-    public Alumno obtiene(String matricula) throws AlumnoNoEncontradoException;
+public class AlumnoNoEncontradoException extends Exception {
     
-    public Alumno obtiene(Long id) throws AlumnoNoEncontradoException;
-
-    public Alumno crea(Alumno alumno);
-
-    public Alumno actualiza(Alumno alumno);
-
-    public void elimina(String matricula) throws AlumnoNoEncontradoException;
+    public AlumnoNoEncontradoException(String message) {
+        super(message);
+    }
     
-    public void elimina(Long id);
-    
-    public void inicializa();
+    public AlumnoNoEncontradoException(String message, Throwable exception) {
+        super(message, exception);
+    }
 }

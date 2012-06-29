@@ -23,16 +23,35 @@
  */
 package escuela;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Version;
+
 /**
  *
  * @author J. David Mendoza <jdmendoza@um.edu.mx>
  */
-public class Alumno {
+@Entity
+@Table(name="ALUMNOS")
+public class Alumno implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Version
+    private Integer version;
+    @Column(unique=true, length=32, nullable=false)
     private String matricula;
+    @Column(length=64, nullable = false)
     private String nombre;
+    @Column(length=64, nullable = false)
     private String apellido;
-    
+
     public Alumno() {
     }
 
@@ -55,7 +74,21 @@ public class Alumno {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
+    /**
+     * @return the version
+     */
+    public Integer getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     /**
      * @return the matricula
      */
@@ -102,5 +135,4 @@ public class Alumno {
     public String toString() {
         return "Alumno{" + "matricula=" + matricula + ", nombre=" + nombre + ", apellido=" + apellido + '}';
     }
-    
 }

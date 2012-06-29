@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +50,7 @@ public class AlumnoDaoTest {
     private static final Logger log = LoggerFactory.getLogger(AlumnoDaoTest.class);
     
     @Autowired
+    @Qualifier("alumnoDaoHibernate")
     private AlumnoDao instance;
 
     public AlumnoDaoTest() {
@@ -97,13 +98,17 @@ public class AlumnoDaoTest {
         Alumno alumno = new Alumno(matricula, "Alumno 01", "Apellido 01");
         alumno = instance.crea(alumno);
 
-        Alumno x = instance.obtiene(matricula);
-        assertNotNull(x);
-        assertEquals("Alumno 01", x.getNombre());
+        try {
+            Alumno x = instance.obtiene(matricula);
+            assertNotNull(x);
+            assertEquals("Alumno 01", x.getNombre());
 
-        Alumno y = instance.obtiene(alumno.getId());
-        assertNotNull(y);
-        assertEquals("Alumno 01", y.getNombre());
+            Alumno y = instance.obtiene(alumno.getId());
+            assertNotNull(y);
+            assertEquals("Alumno 01", y.getNombre());
+        } catch(AlumnoNoEncontradoException e) {
+            log.error("Hubo un problema al intentar obtener al alumno", e);
+        }
     }
 
     /**
@@ -121,16 +126,20 @@ public class AlumnoDaoTest {
 
         assertNotNull(a);
 
-        Alumno b = instance.obtiene(matricula);
-        assertNotNull(b);
-        assertEquals("TEST", b.getNombre());
+        try {
+            Alumno b = instance.obtiene(matricula);
+            assertNotNull(b);
+            assertEquals("TEST", b.getNombre());
+        } catch(AlumnoNoEncontradoException e) {
+            log.error("No encontre al alumno", e);
+        }
     }
 
     /**
      * Test of elimina method, of class AlumnoDao.
      */
-    @Test(expected = EmptyResultDataAccessException.class)
-    public void testEliminaConMatricula() {
+    @Test(expected = AlumnoNoEncontradoException.class)
+    public void testEliminaConMatricula() throws AlumnoNoEncontradoException {
         log.debug("elimina");
         String matricula = "0001";
         Alumno alumno = new Alumno(matricula, "Alumno 01", "Apellido 01");
@@ -138,12 +147,13 @@ public class AlumnoDaoTest {
 
         instance.elimina(matricula);
 
-        instance.obtiene(matricula);
+        alumno = instance.obtiene(matricula);
+        log.debug("ESTE es el alumno {}", alumno);
         fail("Debió lanzar la excepción de lista vacía");
     }
     
-    @Test(expected = EmptyResultDataAccessException.class)
-    public void testEliminaConID() {
+    @Test(expected = AlumnoNoEncontradoException.class)
+    public void testEliminaConID() throws AlumnoNoEncontradoException {
         log.debug("elimina");
         String matricula = "0001";
         Alumno alumno = new Alumno(matricula, "Alumno 01", "Apellido 01");
